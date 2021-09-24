@@ -11,8 +11,8 @@ import { BookService } from 'src/app/services/book.service';
 })
 export class BookComponent implements OnInit {
 
-  addBookForm: FormGroup = new FormGroup({
-    Id: new FormControl(), 
+  bookForm: FormGroup = new FormGroup({
+    Id: new FormControl(),
     ISBN: new FormControl(''),
     Title: new FormControl(''),
     Author: new FormControl(''),
@@ -25,7 +25,7 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
     this.populateTable();
-   }
+  }
 
   populateTable() {
     this.bookService.getBooks()
@@ -34,20 +34,32 @@ export class BookComponent implements OnInit {
         this.bookList = res;
       });
   }
-
-  handleAddBook(){
-    this.bookService.createBook(this.addBookForm.value)
-    .subscribe( (res: any) => { 
-      console.log(res);
-      this.populateTable()
-    });
+  handleFormSubmit(id: string) {
+    if (id == "postBtn") {
+      this.bookService.postBook(this.bookForm.value)
+        .subscribe((res: any) => {
+          console.log(res);
+          this.populateTable()
+        });
+    }
+    else if (id == "putBtn") {
+      this.bookService.putBookById(this.bookForm.value.Id,this.bookForm.value)
+        .subscribe((res: any) => {
+          console.log(res);
+          this.populateTable()
+        });
+    }
   }
 
-  handleDeleteBook(id:number){
-    this.bookService.deleteBook(id.toString())
-    .subscribe( (res: any) => { 
-      console.log(res);
-      this.populateTable()
-    });
+  handleDeleteBook(id: number) {
+    this.bookService.deleteBookById(id.toString())
+      .subscribe((res: any) => {
+        console.log(res);
+        this.populateTable()
+      });
+  }
+
+  handleEditBook(id: number){
+    //To be implemented
   }
 }

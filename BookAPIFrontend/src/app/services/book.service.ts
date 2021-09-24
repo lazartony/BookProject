@@ -13,7 +13,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  createBook(bookData: any): any {
+  postBook(bookData: any): any {
     return this.http.post(this.REST_API_URL, bookData)
       .pipe(map((res: any) => { 
         console.log(res);
@@ -28,7 +28,7 @@ export class BookService {
         return res;
       }));
   }
-  getBookById(id: string | null): any {
+  getBookById(id: string): any {
     let APIUrl = this.REST_API_URL + id;
     return this.http.get(APIUrl)
       .pipe(map((res: any) => {
@@ -36,7 +36,7 @@ export class BookService {
         return res;
       }));
   }
-  deleteBook(id: string | null){
+  deleteBookById(id: string){
     let APIUrl = this.REST_API_URL + id;
     return this.http.delete(APIUrl)
       .pipe(map((res: any) => {
@@ -44,4 +44,19 @@ export class BookService {
         return res;
       }));
   }
+  putBookById(id: string, bookData:any)
+  {
+    let APIUrl = this.REST_API_URL + id;
+    return this.http.put(APIUrl, bookData)
+      .pipe(map((res: any) => {
+        console.log(res);
+        return res;
+      }));
+  }
+
+  patchBookById(id: string, bookData:any)
+  {
+    //To be implemented
+  }
+
 }

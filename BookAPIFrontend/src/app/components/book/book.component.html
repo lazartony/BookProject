@@ -1,5 +1,5 @@
 <h2>Books</h2>
-<form [formGroup]="addBookForm" (ngSubmit)="handleAddBook()">
+<form [formGroup]="bookForm" (ngSubmit)="handleFormSubmit($event.submitter.id)">
     <table>
         <thead>
             <tr>
@@ -20,7 +20,7 @@
                 <td>{{ book.Price }}</td>
                 <td>
                     <button type="button" (click)="handleDeleteBook(book.Id)">Delete</button>
-                    <button type="button" disabled>Patch</button>
+                    <button type="button" (click)="handleEditBook(book.Id)" disabled>Patch</button>
                 </td>
             </tr>
             <tr>
@@ -31,8 +31,8 @@
                 <td><input type="text" formControlName="Author"></td>
                 <td><input type="number" formControlName="Price"></td>
                 <td>
-                    <button type="submit">Post</button>
-                    <button type="button" disabled>Put</button>
+                    <button type="submit" id="postBtn">Post</button>
+                    <button type="submit" id="putBtn">Put</button>
                 </td>
             </tr>
         </tbody>

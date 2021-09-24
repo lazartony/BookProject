@@ -97,6 +97,8 @@
     </Compile>
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookSQLImplementation.cs" />
+    <Compile Include="Models\IBookRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

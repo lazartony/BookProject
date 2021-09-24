@@ -18,7 +18,10 @@
                 <td>{{ book.Title }}</td>
                 <td>{{ book.Author }}</td>
                 <td>{{ book.Price }}</td>
-                <td><button type="button" (click)="handleDeleteBook(book.Id)">Delete</button></td>
+                <td>
+                    <button type="button" (click)="handleDeleteBook(book.Id)">Delete</button>
+                    <button type="button" disabled>Patch</button>
+                </td>
             </tr>
             <tr>
 
@@ -27,7 +30,10 @@
                 <td><input type="text" formControlName="Title"></td>
                 <td><input type="text" formControlName="Author"></td>
                 <td><input type="number" formControlName="Price"></td>
-                <td><button type="submit">Add</button></td>
+                <td>
+                    <button type="submit">Post</button>
+                    <button type="button" disabled>Put</button>
+                </td>
             </tr>
         </tbody>
     </table>

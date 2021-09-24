@@ -129,12 +129,16 @@ namespace BookAPI.Models
                 comm.Connection = conn;
                 if (oldBook != null)
                 {
+                    book.Title = (book.Title != "" && book.Title != null) ? book.Title : oldBook.Title;
+                    book.ISBN = (book.ISBN != "" && book.ISBN != null) ? book.ISBN : oldBook.ISBN;
+                    book.Author = (book.Author != "" && book.Author != null) ? book.Author : oldBook.Author;
+                    book.Price = (book.Price != 0) ? book.Price : oldBook.Price;
                     comm.CommandText = "update Books set Title = @title, ISBN = @isbn, Author = @author, Price = @price where Id = @id";
                     comm.Parameters.AddWithValue("@id", id);
-                    comm.Parameters.AddWithValue("@title", (book.Title != "" && book.Title != null) ? book.Title : oldBook.Title);
-                    comm.Parameters.AddWithValue("@isbn", (book.ISBN != "" && book.ISBN != null) ? book.ISBN : oldBook.ISBN);
-                    comm.Parameters.AddWithValue("@author", (book.Author != "" && book.Author != null) ? book.Author : oldBook.Author);
-                    comm.Parameters.AddWithValue("@price", (book.Price != 0) ? book.Price : oldBook.Price);
+                    comm.Parameters.AddWithValue("@title", book.Title);
+                    comm.Parameters.AddWithValue("@isbn", book.ISBN);
+                    comm.Parameters.AddWithValue("@author", book.Author);
+                    comm.Parameters.AddWithValue("@price", book.Price);
                     conn.Open();
                     comm.ExecuteNonQuery();
                     book.SetId(id);

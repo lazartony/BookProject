@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
+
 
 @Component({
   selector: 'app-book',
@@ -19,47 +19,54 @@ export class BookComponent implements OnInit {
     Price: new FormControl(0),
   });
 
-
+  log = "";
   bookList: Book[] = [];
+  initialFormValue = this.bookForm.value;
+
   constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.populateTable();
+    this.fetchAllBooks();
   }
 
-  populateTable() {
+  fetchAllBooks() {
     this.bookService.getBooks()
       .subscribe((res: Book[]) => {
-        console.log(res);
         this.bookList = res;
       });
   }
   handleFormSubmit(id: string) {
     if (id == "postBtn") {
       this.bookService.postBook(this.bookForm.value)
+        .subscribe((res: Book) => {
+          res.toStr = new Book().toStr;
+          this.log += "\nRow Created : " + res.toStr();
+          this.fetchAllBooks();
+        });
+    }
+    else if (id == "patchBtn") {
+      this.bookService.patchBookById(this.bookForm.value.Id, this.bookForm.value)
         .subscribe((res: any) => {
-          console.log(res);
-          this.populateTable()
+          res.toStr = new Book().toStr;
+          this.log += "\nRow Patched : " + res.toStr();
+          this.fetchAllBooks();
         });
     }
     else if (id == "putBtn") {
-      this.bookService.putBookById(this.bookForm.value.Id,this.bookForm.value)
-        .subscribe((res: any) => {
-          console.log(res);
-          this.populateTable()
+      this.bookService.putBookById(this.bookForm.value.Id, this.bookForm.value)
+        .subscribe((res: Book) => {
+          res.toStr = new Book().toStr;
+          this.log += "\nRow Put : " + res.toStr();
+          this.fetchAllBooks();
         });
     }
+    this.bookForm.reset(this.initialFormValue);
   }
-
   handleDeleteBook(id: number) {
     this.bookService.deleteBookById(id.toString())
       .subscribe((res: any) => {
-        console.log(res);
-        this.populateTable()
+        this.log += "\nRow Deleted : Id = " + id;
+        this.fetchAllBooks();
       });
-  }
-
-  handleEditBook(id: number){
-    //To be implemented
   }
 }

@@ -13,53 +13,29 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  postBook(bookData: any): any {
-    return this.http.post(this.REST_API_URL, bookData)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+  postBook(bookData: Book): Observable<Book> {
+    return this.http.post<Book>(this.REST_API_URL, bookData);
   }
 
   getBooks(): Observable<Book[]> {
-    return this.http.get(this.REST_API_URL)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+    return this.http.get<Book[]>(this.REST_API_URL);
   }
-  getBookById(id: string): any {
+  getBookById(id: string): Observable<Book> {
     let APIUrl = this.REST_API_URL + id;
-    return this.http.get(APIUrl)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+    return this.http.get<Book>(APIUrl);
   }
   deleteBookById(id: string) {
     let APIUrl = this.REST_API_URL + id;
-    return this.http.delete(APIUrl)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+    return this.http.delete(APIUrl);
   }
-  putBookById(id: string, bookData: any) {
+  putBookById(id: string, bookData: any): Observable<Book> {
     let APIUrl = this.REST_API_URL + id;
-    return this.http.put(APIUrl, bookData)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+    return this.http.put<Book>(APIUrl, bookData);
   }
 
   patchBookById(id: string, bookData: any) {
     let APIUrl = this.REST_API_URL + id;
-    return this.http.patch(APIUrl, bookData)
-      .pipe(map((res: any) => {
-        console.log(res);
-        return res;
-      }));
+    return this.http.patch(APIUrl, bookData);
   }
 
 }

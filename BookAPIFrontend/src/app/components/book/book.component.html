@@ -1,0 +1,35 @@
+<h2>Books</h2>
+<form [formGroup]="addBookForm" (ngSubmit)="handleAddBook()">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let book of bookList">
+                <td>{{ book.Id }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.Title }}</td>
+                <td>{{ book.Author }}</td>
+                <td>{{ book.Price }}</td>
+                <td><button type="button" (click)="handleDeleteBook(book.Id)">Delete</button></td>
+            </tr>
+            <tr>
+
+                <td><input type="number" formControlName="Id"></td>
+                <td><input type="text" formControlName="ISBN"></td>
+                <td><input type="text" formControlName="Title"></td>
+                <td><input type="text" formControlName="Author"></td>
+                <td><input type="number" formControlName="Price"></td>
+                <td><button type="submit">Add</button></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<hr>

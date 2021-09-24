@@ -141,7 +141,7 @@ namespace BookAPI.Controllers
                 conn.Open();
                 comm = new SqlCommand();
                 comm.Connection = conn;
-                comm.CommandText = "select * from Books where id = @id";
+                comm.CommandText = "delete from Books where id = @id";
                 comm.Parameters.AddWithValue("@id", id);
                 int rows = comm.ExecuteNonQuery();
 

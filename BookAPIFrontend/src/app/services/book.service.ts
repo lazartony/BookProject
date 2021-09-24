@@ -15,15 +15,15 @@ export class BookService {
 
   postBook(bookData: any): any {
     return this.http.post(this.REST_API_URL, bookData)
-      .pipe(map((res: any) => { 
+      .pipe(map((res: any) => {
         console.log(res);
         return res;
       }));
   }
 
-  getBooks(): Observable<Book[]> { 
+  getBooks(): Observable<Book[]> {
     return this.http.get(this.REST_API_URL)
-      .pipe(map((res: any) => { 
+      .pipe(map((res: any) => {
         console.log(res);
         return res;
       }));
@@ -36,7 +36,7 @@ export class BookService {
         return res;
       }));
   }
-  deleteBookById(id: string){
+  deleteBookById(id: string) {
     let APIUrl = this.REST_API_URL + id;
     return this.http.delete(APIUrl)
       .pipe(map((res: any) => {
@@ -44,8 +44,7 @@ export class BookService {
         return res;
       }));
   }
-  putBookById(id: string, bookData:any)
-  {
+  putBookById(id: string, bookData: any) {
     let APIUrl = this.REST_API_URL + id;
     return this.http.put(APIUrl, bookData)
       .pipe(map((res: any) => {
@@ -54,9 +53,13 @@ export class BookService {
       }));
   }
 
-  patchBookById(id: string, bookData:any)
-  {
-    //To be implemented
+  patchBookById(id: string, bookData: any) {
+    let APIUrl = this.REST_API_URL + id;
+    return this.http.patch(APIUrl, bookData)
+      .pipe(map((res: any) => {
+        console.log(res);
+        return res;
+      }));
   }
 
 }

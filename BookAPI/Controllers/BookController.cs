@@ -49,9 +49,9 @@ namespace BookAPI.Controllers
             repository.DeleteBookById(id);
         }
         [HttpPatch]
-        public string Patch(int id, Book book)
+        public Book Patch(int id, Book book)
         {
-            return "Not Implemented";
+            return repository.UpdateBookById(id, book);
         }
     }
 }

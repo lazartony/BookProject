@@ -121,7 +121,34 @@ namespace BookAPI.Models
 
         public Book UpdateBookById(int id, Book book)
         {
-            throw new NotImplementedException();
+            Book oldBook = FetchBookById(id);
+            string connectionString = ConfigurationManager.ConnectionStrings["mydb"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                if (oldBook != null)
+                {
+                    comm.CommandText = "update Books set Title = @title, ISBN = @isbn, Author = @author, Price = @price where Id = @id";
+                    comm.Parameters.AddWithValue("@id", id);
+                    comm.Parameters.AddWithValue("@title", (book.Title != "" && book.Title != null) ? book.Title : oldBook.Title);
+                    comm.Parameters.AddWithValue("@isbn", (book.ISBN != "" && book.ISBN != null) ? book.ISBN : oldBook.ISBN);
+                    comm.Parameters.AddWithValue("@author", (book.Author != "" && book.Author != null) ? book.Author : oldBook.Author);
+                    comm.Parameters.AddWithValue("@price", (book.Price != 0) ? book.Price : oldBook.Price);
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    book.SetId(id);
+                }
+
+            }
+            if (oldBook != null)
+            {
+                return book;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
